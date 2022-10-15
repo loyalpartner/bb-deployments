@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - bb-namespace.yaml
+  - local-storage.yaml
   - config/
   - browser.yaml
   - frontend.yaml

@@ -11,10 +11,10 @@ data:
                 backend: { grpc: { address: 'storage-0.storage.buildbarn:8981' } },
                 weight: 1,
               },
-              {
-                backend: { grpc: { address: 'storage-1.storage.buildbarn:8981' } },
-                weight: 1,
-              },
+              # {
+              #   backend: { grpc: { address: 'storage-1.storage.buildbarn:8981' } },
+              #   weight: 1,
+              # },
             ],
           },
         },
@@ -27,16 +27,16 @@ data:
                   backend: { grpc: { address: 'storage-0.storage.buildbarn:8981' } },
                   weight: 1,
                 },
-                {
-                  backend: { grpc: { address: 'storage-1.storage.buildbarn:8981' } },
-                  weight: 1,
-                },
+                # {
+                #   backend: { grpc: { address: 'storage-1.storage.buildbarn:8981' } },
+                #   weight: 1,
+                # },
               ],
             },
           },
         },
       },
-      browserUrl: 'http://bb-browser.example.com:80',
+      browserUrl: 'http://browser.buildbarn:7984',
       httpListenAddress: ':80',
       maximumMessageSizeBytes: 16 * 1024 * 1024,
       global: {

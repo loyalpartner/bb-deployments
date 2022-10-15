@@ -4,7 +4,7 @@ metadata:
   name: storage
   namespace: buildbarn
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: storage
@@ -62,17 +62,19 @@ spec:
     spec:
       accessModes:
       - ReadWriteOnce
+      storageClassName: local-storage
       resources:
         requests:
-          storage: 12Gi
+          storage: 120Gi
   - metadata:
       name: ac
     spec:
       accessModes:
       - ReadWriteOnce
+      storageClassName: local-storage
       resources:
         requests:
-          storage: 1Gi
+          storage: 50Gi
 ---
 apiVersion: v1
 kind: Service

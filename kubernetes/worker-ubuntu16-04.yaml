@@ -7,7 +7,7 @@ metadata:
     prometheus.io/port: "80"
     prometheus.io/scrape: "true"
 spec:
-  replicas: 8
+  replicas: 3
   selector:
     matchLabels:
       app: worker
@@ -18,10 +18,12 @@ spec:
         app: worker
         instance: ubuntu22-04
     spec:
+      nodeName: r620-server
       containers:
       - args:
         - /config/worker-ubuntu22-04.jsonnet
         image: buildbarn/bb-worker:20220711T053610Z-2f8fb05
+        # image: loyalparter/bb_worker
         name: worker
         volumeMounts:
         - mountPath: /config/
@@ -91,3 +93,100 @@ spec:
                 path: common.libsonnet
       - emptyDir: {}
         name: worker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-ubuntu22-04-2
+  namespace: buildbarn
+  annotations:
+    prometheus.io/port: "80"
+    prometheus.io/scrape: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+      instance: ubuntu22-04
+  template:
+    metadata:
+      labels:
+        app: worker
+        instance: ubuntu22-04
+    spec:
+      nodeName: damopan
+      containers:
+      - args:
+        - /config/worker-ubuntu22-04.jsonnet
+        image: buildbarn/bb-worker:20220711T053610Z-2f8fb05
+        # image: loyalparter/bb_worker
+        name: worker
+        volumeMounts:
+        - mountPath: /config/
+          name: configs
+          readOnly: true
+        - mountPath: /worker
+          name: worker
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      - command: [/bb/tini, -v, -g, --, /bb/bb_runner, /config/runner-ubuntu22-04.jsonnet]
+        image: ghcr.io/catthehacker/ubuntu:act-22.04@sha256:5f9c35c25db1d51a8ddaae5c0ba8d3c163c5e9a4a6cc97acd409ac7eae239448
+        name: runner
+        securityContext:
+          runAsUser: 65534
+          allowPrivilegeEscalation: false
+        volumeMounts:
+        - mountPath: /config/
+          name: configs
+          readOnly: true
+        - mountPath: /worker
+          name: worker
+        - mountPath: /bb
+          name: bb-runner
+          readOnly: true
+      initContainers:
+      - name: bb-runner-installer
+        image: buildbarn/bb-runner-installer:20220711T053610Z-2f8fb05
+        volumeMounts:
+        - mountPath: /bb/
+          name: bb-runner
+      - name: volume-init
+        image: busybox:1.31.1-uclibc
+        command:
+        - sh
+        - -c
+        - mkdir -pm 0777 /worker/build && mkdir -pm 0700 /worker/cache && chmod 0777 /worker
+        volumeMounts:
+        - mountPath: /worker
+          name: worker
+      volumes:
+      - name: bb-runner
+        emptyDir: {}
+      - name: configs
+        projected:
+          sources:
+          - configMap:
+              name: runner-ubuntu22-04
+              items:
+              - key: runner-ubuntu22-04.jsonnet
+                path: runner-ubuntu22-04.jsonnet
+          - configMap:
+              name: worker-ubuntu22-04
+              items:
+              - key: worker-ubuntu22-04.jsonnet
+                path: worker-ubuntu22-04.jsonnet
+          - configMap:
+              name: common
+              items:
+              - key: common.libsonnet
+                path: common.libsonnet
+      - emptyDir: {}
+        name: worker
+
