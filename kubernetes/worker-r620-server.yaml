@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker-ubuntu22-04
+  name: worker-r620-server
   namespace: buildbarn
   annotations:
     prometheus.io/port: "80"
     prometheus.io/scrape: "true"
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: worker
@@ -18,7 +18,7 @@ spec:
         app: worker
         instance: ubuntu22-04
     spec:
-      nodeName: damopan
+      nodeName: r620-server
       containers:
       - args:
         - /config/worker-ubuntu22-04.jsonnet

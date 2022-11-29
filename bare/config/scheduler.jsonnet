@@ -3,11 +3,17 @@ local common = import 'common.libsonnet';
 {
   adminHttpListenAddress: ':7982',
   clientGrpcServers: [{
-    listenAddresses: [':8982'],
+    listenAddresses: ['0.0.0.0:8982'],
     authenticationPolicy: { allow: {} },
   }],
   workerGrpcServers: [{
-    listenAddresses: [':8983'],
+    listenAddresses: ['0.0.0.0:8983'],
+    authenticationPolicy: { allow: {} },
+  },{
+    listenAddresses: ['0.0.0.0:8984'],
+    authenticationPolicy: { allow: {} },
+  },{
+    listenAddresses: ['0.0.0.0:8985'],
     authenticationPolicy: { allow: {} },
   }],
   browserUrl: common.browserUrl,

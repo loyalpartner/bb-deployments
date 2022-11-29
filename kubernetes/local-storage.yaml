@@ -11,7 +11,7 @@ metadata:
   name: cas-0
 spec:
   capacity:
-    storage: 120Gi
+    storage: 150Gi
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
@@ -26,28 +26,28 @@ spec:
           operator: In
           values:
           - damopan
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: cas1
-# spec:
-#   capacity:
-#     storage: 24Gi
-#   accessModes:
-#   - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: local-storage
-#   local:
-#     path: /ifs/kubernetes/cas-1
-#   nodeAffinity:
-#     required:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: kubernetes.io/hostname
-#           operator: In
-#           values:
-#           - damopan
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cas-1
+spec:
+  capacity:
+    storage: 150Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /ifs/kubernetes/cas-1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - damopan
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -70,49 +70,25 @@ spec:
           operator: In
           values:
           - damopan
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: ac-1
-# spec:
-#   capacity:
-#     storage: 12Gi
-#   accessModes:
-#   - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: local-storage
-#   local:
-#     path: /ifs/kubernetes/ac-1
-#   nodeAffinity:
-#     required:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: kubernetes.io/hostname
-#           operator: In
-#           values:
-#           - damopan
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: cas
-# spec:
-#   accessModes:
-#   - ReadWriteOnce
-#   storageClassName: local-storage
-#   resources:
-#     requests:
-#       storage: 12Gi
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: ac
-# spec:
-#   accessModes:
-#   - ReadWriteOnce
-#   storageClassName: local-storage
-#   resources:
-#     requests:
-#       storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ac-1
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /ifs/kubernetes/ac-1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - damopan

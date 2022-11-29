@@ -21,6 +21,8 @@ spec:
         ports:
         - containerPort: 8980
           protocol: TCP
+        - containerPort: 9980
+          protocol: TCP
         volumeMounts:
         - mountPath: /config/
           name: configs
@@ -53,6 +55,9 @@ spec:
   - port: 8980
     protocol: TCP
     name: grpc
+  - port: 9980
+    protocol: TCP
+    name: http
   selector:
     app: frontend
   type: LoadBalancer

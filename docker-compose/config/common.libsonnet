@@ -37,6 +37,19 @@
   httpListenAddress: ':80',
   maximumMessageSizeBytes: 16 * 1024 * 1024,
   global: {
+    tracing: {
+      backends: [
+        {
+          jaegerCollectorSpanExporter: { endpoint: 'http://jaeger:14268/api/traces' },
+          batchSpanProcessor: {},
+        },
+      ],
+      sampler: { always: {} },
+      resourceAttributes: {
+        'service.namespace': { string: 'buildbarn' },
+        'service.version': { string: '0.0.1' },
+      },
+    },
     diagnosticsHttpServer: {
       listenAddress: ':9980',
       enablePrometheus: true,

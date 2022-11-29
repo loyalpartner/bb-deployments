@@ -20,8 +20,14 @@ local common = import 'common.libsonnet';
       concurrency: 8,
       platform: {
         properties: [
-          { name: 'OSFamily', value: 'Linux' }
+          { name: 'OSFamily', value: 'Linux' },
         ],
+      },
+      workerId: {
+        datacenter: 'paris',
+        rack: '4',
+        slot: '15',
+        hostname: 'ubuntu-worker.example.com',
       },
     }],
   }],

@@ -1,0 +1,23 @@
+version: "3"
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:1.22.0
+    container_name: jaeger
+    ports:
+      - "14268:14268"
+      - "16686:16686" # The UI port
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090" # Prometheus WebUI
+    command: --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./recording-rules.yml:/etc/prometheus/recording-rules.yml
+  grafana:
+    image: grafana/grafana:8.0.6
+    environment:
+      TZ: Asia/Shanghai
+    restart: always
+    ports:
+        - "3001:3000" # Grafana WebUI

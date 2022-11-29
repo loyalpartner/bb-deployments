@@ -21,6 +21,8 @@ spec:
         image: buildbarn/bb-scheduler:20220711T053610Z-2f8fb05
         name: scheduler
         ports:
+        - containerPort: 7982
+          protocol: TCP
         - containerPort: 8982
           protocol: TCP
         - containerPort: 8983
@@ -56,6 +58,9 @@ metadata:
     prometheus.io/scrape: "true"
 spec:
   ports:
+  - port: 7982
+    protocol: TCP
+    name: http-admin
   - port: 8982
     protocol: TCP
     name: client-grpc

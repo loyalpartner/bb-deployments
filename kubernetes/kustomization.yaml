@@ -10,3 +10,7 @@ resources:
   - scheduler.yaml
   - storage.yaml
   - worker-ubuntu16-04.yaml
+  # - worker-k8s-lxc.yml
+  # - worker-k8s-worker.yaml
+  - worker-r620-server.yaml
+

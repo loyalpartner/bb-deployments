@@ -19,7 +19,12 @@ local common = import 'common.libsonnet';
       # https://github.com/grpc/grpc/blob/master/doc/naming.md
       endpoint: { address: 'unix:worker/runner' },
       concurrency: 8,
-      platform: {},
+      platform: {
+        properties: [
+          { name: 'OSFamily', value: 'Linux' },
+          /* { name: 'container-image', value: 'docker://marketplace.gcr.io/google/rbe-ubuntu16-04@sha256:b516a2d69537cb40a7c6a7d92d0008abb29fba8725243772bdaf2c83f1be2272' } */
+        ],
+      },
       workerId: {
         datacenter: 'paris',
         rack: '4',

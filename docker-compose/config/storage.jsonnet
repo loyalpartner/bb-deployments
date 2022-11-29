@@ -46,7 +46,7 @@ local common = import 'common.libsonnet';
         keyLocationMapOnBlockDevice: {
           file: {
             path: '/storage-ac/key_location_map',
-            sizeBytes: 1024 * 1024,
+            sizeBytes: 1024 * 1024 * 1024,
           },
         },
         keyLocationMapMaximumGetAttempts: 8,
@@ -58,7 +58,7 @@ local common = import 'common.libsonnet';
           source: {
             file: {
               path: '/storage-ac/blocks',
-              sizeBytes: 20 * 1024 * 1024,
+              sizeBytes: 20 * 1024 * 1024 * 1024,
             },
           },
           spareBlocks: 3,
